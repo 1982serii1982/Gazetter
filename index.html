@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>Gazetteer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./libs/css/normalize.css">
+    <link rel="stylesheet" href="./libs/ext_libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./libs/css/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="./libs/ext_libs/leaflet/leaflet.css">
+    <link rel="stylesheet" href="./libs/ext_libs/extramarkers/css/leaflet.extra-markers.min.css">
+    <link rel="stylesheet" href="./libs/css/MarkerCluster.css">
+    <link rel="stylesheet" href="./libs/css/MarkerClusterCustom.css">
+    <link rel="stylesheet" href="./libs/ext_libs/easybutton/easy-button.css">
+    <link rel="stylesheet" href="./libs/css/style.css">
+</head>
+<body>
+    <div class="preloader">
+      <div class="preloader_message"></div>
+      <div class="loader">Loading</div>
+    </div>
+    <header class="main_header"></header>
+    <main class="main_container">
+        <div class="info_search">
+          <div class="search_loader_wrapper">
+              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+          </div>
+          <select class="header_select">
+              <option value="default" selected>Select a country</option>
+          </select>
+        </div>
+        <div id="map"></div>
+    </main>
+    <footer>
+      <div class="modal_windows">
+        <div class="modal fade" id="countryInfo" data-bs-keyboard="false" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="countryInfoLabel">Country Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="countryInfo"></div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="weather" data-bs-keyboard="false" tabindex="-1" aria-labelledby="weatherLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="weatherLabel">Weather</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="weather_loader_wrapper">
+                  <div class="weather_loader_error">Retrieving data error...</div>
+                  <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="weather">
+                </div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="modal fade" id="earthquake" data-bs-keyboard="false" tabindex="-1" aria-labelledby="earthquakeLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="earthquakeLabel">Earthquake</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="earthquake_loader_wrapper">
+                  <div class="earthquake_loader_error">Retrieving data error...</div>
+                  <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="earthquake">
+                </div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="wikipedia" data-bs-keyboard="false" tabindex="-1" aria-labelledby="wikipediaLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="wikipediaLabel">Wikipedia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="wiki_loader_wrapper">
+                  <div class="wiki_loader_error">Retrieving data error...</div>
+                  <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="wiki"></div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="airports" data-bs-keyboard="false" tabindex="-1" aria-labelledby="airportsLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="airportsLabel">Airports</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="airports_loader_stretch"></div>
+                <div class="airports_loader_wrapper">
+                  <div class="airports_loader_error">Retrieving data error...</div>
+                  <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="airports"></div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="news" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newsLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="newsLabel">News</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="news_loader_wrapper">
+                  <div class="news_loader_error">Retrieving data error...</div>
+                  <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="news"></div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="./libs/js/jquery-3.6.1.min.js"></script>
+    <script src="./libs/ext_libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./libs/ext_libs/leaflet/leaflet.js"></script>
+    <script src="./libs/js/leaflet.markercluster.js"></script>
+    <script src="./libs/ext_libs/extramarkers/js/leaflet.extra-markers.min.js"></script>
+    <script src="./libs/ext_libs/easybutton/easy-button.js"></script>
+    <script src="./libs/ext_libs/Date/date.js"></script>
+    <script src="./libs/ext_libs/moment/moment.js"></script>
+    <script src="./libs/js/main.js"></script>
+</body>
+</html>
